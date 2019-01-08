@@ -1,0 +1,165 @@
+body {
+  width: 96%;
+  max-width: 100%;
+  margin: 0 auto;
+  word-break: break-word;
+  padding: 0 5px;
+}
+
+h1 {
+  color: #0F7792;
+  margin-left: 40px;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0F7792;
+}
+h3 {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0F7792;
+}
+
+p {
+  color: #333;
+}
+.logo {
+  width:110px;
+  height: auto;
+  float: left;
+  margin-left: 20px;
+}
+
+.header {
+  width:800px;
+  max-width:100%;
+  margin-top: 20px;
+}
+
+.header::after {
+  content: "";
+  clear: both;
+}
+
+.pagetitle {
+  padding-left: 167px;
+  font-size: 40px;
+  padding-top: 15px;
+}
+
+.pagetitle::after {
+  content: "";
+  clear: both;
+}
+.menu {
+  font-size: 1.1rem;
+  margin: 0px 10px 0px 0px;
+  float: left;
+  border-right: 1px solid #bbb;
+  padding-right: 10px;
+  height: calc(100% - 160px);
+}
+
+.menu ul li {
+  display: inline;
+}
+
+.page {
+  padding-top: 40px;
+}
+
+.btn {
+  text-decoration: none;
+  background: #005D77;
+  cursor: pointer;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  letter-spacing: .05em;
+  margin-top: .5rem;
+  margin-bottom: 0;
+  margin-right: 1em;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.2rem;
+  line-height: 1.4;
+  padding: .4em 1em;
+}
+
+table th {
+  padding: 3px 5px 3px 0px;
+}
+
+table td {
+  padding: 3px 5px 3px 0px;
+}
+
+input[name="spendKey"] {
+  width: 100%;
+  font-size: 1.6rem;
+}
+
+#wallet {
+  position: relative;
+  top: -3em;
+  font-weight: 500;
+  margin-bottom: -3em;
+}
+
+button, input, select, textarea {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+input {
+  margin: 0;
+  min-width: 100px;
+}
+
+table.send th {
+  text-align: left !important;
+}
+
+table.send td {
+  text-align: right !important;
+}
+
+table.send td.submit {
+  text-align: center !important;
+}
+
+a {
+  color: #0F7792;
+}
+
+.menu a {
+  font-size: 1.3rem;
+}
+
+p.balance {
+  text-align: right;
+  padding: 0px;
+}
+
+p.footer {
+  padding: 0px;
+  font-size: 80%;
+  position: absolute;
+  bottom: 0;
+  left: 1em;
+}
+
+span.error {
+  color: #ff0000;
+}
+
+div.hscroll {
+  display: block;
+  overflow-x: auto;
+}
+
+div.hscroll table {
+  white-space: nowrap;
+}
