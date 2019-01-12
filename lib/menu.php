@@ -9,6 +9,7 @@
   echo "</p><br>";
   echo "<a href='index.php'>Transactions</a><br>";
   echo "<a href='send.php'>Send BTOR</a><br>";
+  echo "<a href='contacts.php'>Contacts</a><br>";
   echo "<a href='info.php'>Wallet info</a><br>";
   echo "<a href='logout.php'>Logout</a><br>";
   $dt = date("Y");

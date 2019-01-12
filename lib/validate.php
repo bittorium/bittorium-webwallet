@@ -105,5 +105,25 @@ function validate_amount($amount) {
   return true;
 }
 
+function validate_contact_name($name) {
+  if (strlen($name) < 1 || strlen($name) > 64) {
+    return false;
+  }
+  if (strpos($name, "'") !== false) {
+    return false;
+  }
+  if (strpos($name, '"') !== false) {
+    return false;
+  }
+  if (strpos($name, "\\") !== false) {
+    return false;
+  }
+  for ($i = 0; $i < strlen($name); $i++) {
+    if (ord($name{$i}) < 32) {
+      return false;
+    }
+  }
+  return true;
+}
 //echo "Leaving lib/validate.php...<br>";
 ?>

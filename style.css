@@ -118,15 +118,22 @@ input {
   min-width: 100px;
 }
 
+table.contact {
+  min-width: 1000px;
+}
+
+table.contact th,
 table.send th {
   text-align: left !important;
 }
 
+table.contact td,
 table.send td {
   text-align: right !important;
 }
 
-table.send td.submit {
+table.send td.submit,
+table.contact td.submit {
   text-align: center !important;
 }
 

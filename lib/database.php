@@ -126,6 +126,17 @@ function check_database() {
       }
     }
   }
+  $result = $db->query("SELECT count(*) FROM sqlite_master WHERE type='table' AND name='contacts';");
+  $arr = $result->fetchArray();
+  if ($arr["count(*)"] == 0) {
+    echo "Creating contacts table...<br>";
+    if ($db->exec("CREATE TABLE contacts (spendKey TEXT, name TEXT, address TEXT, paymentID TEXT);")) {
+      echo "Contacts table created...<br>";
+    } else {
+      echo "Creating contacts table failed.<br>";
+      return false;
+    }
+  }
   return true;
 }
 
@@ -157,6 +168,58 @@ function set_email_with_spendkey($spendKey, $email) {
   global $db;
   $result = $db->query("UPDATE users SET emailAddress = '".$email."' WHERE spendKey='".$spendKey."';");
   return $result;
+}
+
+function create_contact($spendKey, $name, $address, $paymentID) {
+  global $db;
+  $result = $db->query("INSERT INTO contacts (spendKey, name, address, paymentID) VALUES ('".$spendKey."', '".$name."', '".$address."', '".$paymendID."');");
+  return $result;
+}
+
+function delete_contact($spendKey, $name) {
+  global $db;
+  $result = $db->query("DELETE FROM contacts WHERE spendKey = '".$spendKey."' AND name = '".$name."';");
+  return $result;
+}
+
+function rename_contact($spendKey, $oldName, $newName) {
+  global $db;
+  $result = $db->query("UPDATE contacts SET name = '".$newName."' WHERE spendKey = '".$spendKey."' AND name = '".$oldName."';");
+  return $result;
+}
+
+function update_contact($spendKey, $name, $address, $paymentID) {
+  global $db;
+  $result = $db->query("UPDATE contacts SET address = '".$address."', paymentID = '".$paymentID."' WHERE spendKey = '".$spendKey."' AND name = '".$name."';");
+  return $result;
+}
+
+function has_contact($spendKey, $name) {
+  global $db;
+  $result = $db->query("SELECT count(*) FROM contacts WHERE spendKey ='".$spendKey."' AND name = '".$name."';");
+  $arr = $result->fetchArray();
+  return ($arr["count(*)"] != 0);
+}
+
+function get_contact($spendKey, $name) {
+  global $db;
+  $result = $db->query("SELECT address, paymentID FROM contacts WHERE spendKey = '".$spendKey."' AND name = '".$name."';");
+  $arr = $result->fetchArray();
+  return $arr;
+}
+
+function get_contacts($spendKey) {
+  global $db;
+  $result = $db->query("SELECT name, address, paymentID FROM contacts WHERE spendKey = '".$spendKey."';");
+  if ($result->numColumns() == 0) {
+    return false;
+  }
+  $contacts = Array();
+  $arr = Array();
+  while ($arr = $result->fetchArray()) {
+    $contacts[] = $arr;
+  }
+  return $contacts;
 }
 //echo "Leaving lib/database.php<br>";
 ?>
