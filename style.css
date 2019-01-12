@@ -190,3 +190,7 @@ input[name="amount"],
 input[name="anonymity"] {
   text-align: right !important;
 }
+
+input[size] {
+  font-family: monospace !important;
+}
