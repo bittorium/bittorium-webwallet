@@ -72,25 +72,25 @@ if (logged_in()) {
     }
     $tx = $result->transaction;
     echo "<h3>Transaction " . $hash . "</h3>";
-    echo "<table>";
-    echo "<tr><th style='text-align: left;'>Amount</th><td>" . number_format($tx->amount / 100, 2) . " BTOR</td></tr>";
-    echo "<tr><th style='text-align: left;'>Block</th><td>" . $tx->blockIndex . "</td></tr>";
-    echo "<tr><th style='text-align: left;'>Fee</th><td>" . number_format($tx->fee / 100, 2) . " BTOR</td></tr>";
-    echo "<tr><th style='text-align: left;'>Type</th><td>" . ($tx->isBase ? "Coinbase" : "Key output") . "</td></tr>";
+    echo "<table id='transaction'>";
+    echo "<tr><th>Amount</th><td>" . number_format($tx->amount / 100, 2) . " BTOR</td></tr>";
+    echo "<tr><th>Block</th><td>" . $tx->blockIndex . "</td></tr>";
+    echo "<tr><th>Fee</th><td>" . number_format($tx->fee / 100, 2) . " BTOR</td></tr>";
+    echo "<tr><th>Type</th><td>" . ($tx->isBase ? "Coinbase" : "Key output") . "</td></tr>";
     if (strlen($tx->paymentId) > 0) {
-      echo "<tr><th style='text-align: left;'>Payment ID</th><td>" . $tx->paymentID . "</td></tr>";
+      echo "<tr><th>Payment ID</th><td>" . $tx->paymentID . "</td></tr>";
     }
-    echo "<tr><th style='text-align: left;'>State</th><td>" . $WalletTransactionState[$tx->state] . "</td></tr>";
-    echo "<tr><th style='text-align: left;'>Time</th><td>" . date("D, d M y H:i:s", $tx->timestamp) . "</td></tr>";
+    echo "<tr><th>State</th><td>" . $WalletTransactionState[$tx->state] . "</td></tr>";
+    echo "<tr><th>Time</th><td>" . date("D, d M y H:i:s", $tx->timestamp) . "</td></tr>";
     echo "</table>";
     echo "<h3>Transfers</h3>";
     echo "<div class='hscroll'>";
-    echo "<table>";
+    echo "<table id='transfers'>";
     echo "<tr><th>Address</th><th>Amount</th><th>Type</th></tr>";
     foreach ($tx->transfers as $transfer) {
       echo "<tr>";
       echo "<td>" . $transfer->address . "</td>";
-      echo "<td style='text-align: right;'>" . number_format($transfer->amount / 100, 2) . " BTOR</td>";
+      echo "<td>" . number_format($transfer->amount / 100, 2) . " BTOR</td>";
       echo "<td>" . $WalletTransferType[$transfer->type] . "</td>";
       echo "</tr>";
     }
@@ -123,7 +123,7 @@ if (logged_in()) {
             echo "<td>" . $WalletTransactionState[$transaction->state] . "</td>";
             echo "<td><a href='?hash=" . $transaction->transactionHash . "'>" . $transaction->transactionHash . "</a></td>";
             echo "<td>" . date("D, d M y H:i:s", $transaction->timestamp) . "</td>";
-            echo "<td style='text-align: right;'>" . number_format($transaction->amount / 100, 2) . "</td>";
+            echo "<td>" . number_format($transaction->amount / 100, 2) . "</td>";
             echo "<td>" . $transaction->paymentId . "</td>";
             echo "</tr>";
           }

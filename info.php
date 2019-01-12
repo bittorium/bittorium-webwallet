@@ -179,12 +179,12 @@ if (logged_in()) {
     echo "<span class='error'>Internal server error, contact web wallet admin!</span></div></body></html>";
     exit();
   }
-  echo "<table>";
+  echo "<table id='info'>";
   if (array_key_exists('mnemonicSeed', $result)) {
-    echo "<tr><th style='text-align: left;' width='130px' valign='top'>Mnemonic seed:</th><td>", $result->mnemonicSeed, "</td></tr>";
+    echo "<tr><th>Mnemonic seed:</th><td>", $result->mnemonicSeed, "</td></tr>";
   }
-  echo "<tr><th style='text-align: left;' width='80px' valign='top'>View key:</th><td>", $viewKey, "</td></tr>";
-  echo "<tr><th style='text-align: left;' width='80px' valign='top'>Spend key:</th><td>", $spendKey, "</td></tr>";
+  echo "<tr><th>View key:</th><td>", $viewKey, "</td></tr>";
+  echo "<tr><th>Spend key:</th><td>", $spendKey, "</td></tr>";
   echo "</table>";
   echo "<br><h3>E-mail change</h3>";
   echo "<form action='info.php' method='post'>";

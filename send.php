@@ -71,8 +71,8 @@ if (logged_in()) {
     echo "<form action='send.php' method='post'>";
     echo "<table class='send'>";
     echo "<tr><th>Recipient address:</th><td><input type='text' maxlength='97' required pattern='bT[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{95}' name='recipient' size='97'></td></tr>";
-    echo "<tr><th>Amount:</th><td><input type='number' min='0.01' max='" . number_format($maxAmount / 100, 2) . "' step='0.01' name='amount' value='0.01' style='text-align: right;'></td></tr>";
-    echo "<tr><th>Anonymity level:</th><td><input type='number' min='0' max='9' step='1' name='anonymity' value='0' style='text-align: right;'></td></tr>";
+    echo "<tr><th>Amount:</th><td><input type='number' min='0.01' max='" . number_format($maxAmount / 100, 2) . "' step='0.01' name='amount' value='0.01'></td></tr>";
+    echo "<tr><th>Anonymity level:</th><td><input type='number' min='0' max='9' step='1' name='anonymity' value='0'></td></tr>";
     echo "<tr><th>Payment ID:</th><td><input type='text' maxlength='64' pattern='.{0}|[0-9a-fA-F]{64}' name='paymentID' size='64'></td></tr>";
     echo "<tr><td colspan=2 class='submit'><input type='submit' class='btn' name='send' value='Send'></td></tr>";
     echo "</form>";

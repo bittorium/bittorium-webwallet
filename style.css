@@ -137,6 +137,21 @@ table.contact td.submit {
   text-align: center !important;
 }
 
+table#info th {
+  text-align: left !important;
+  min-width: 130px !important;
+  vertical-align: top !important;
+}
+
+table#transaction th {
+  text-align: left !important;
+}
+
+table#transactions td:nth-of-type(4),
+table#transfers td:nth-of-type(2) {
+  text-align: right !important;
+}
+
 a {
   color: #0F7792;
 }
@@ -169,4 +184,9 @@ div.hscroll {
 
 div.hscroll table {
   white-space: nowrap;
+}
+
+input[name="amount"],
+input[name="anonymity"] {
+  text-align: right !important;
 }

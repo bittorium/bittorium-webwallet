@@ -162,10 +162,10 @@ if (logged_in()) {
       echo "<input type='hidden' name='recipient' value='".$contact['address']."'>";
       echo "<input type='hidden' name='paymentID' value='".$contact['paymentID']."'>";
       echo "<table class='send'>";
-      echo "<tr><th>Amount:</th><td><input type='number' min='0.01' max='" . number_format($maxAmount / 100, 2) . "' step='0.01' name='amount' value='0.01' style='text-align: right;'></td>";
+      echo "<tr><th>Amount:</th><td><input type='number' min='0.01' max='" . number_format($maxAmount / 100, 2) . "' step='0.01' name='amount' value='0.01'></td>";
       echo "<td rowspan='2'><input type='submit' class='btn' name='submit' value='Send'></td>";
       echo "</tr>";
-      echo "<tr><th>Anonymity level:</th><td><input type='number' min='0' max='9' step='1' name='anonymity' value='0' style='text-align: right;'></td></tr>";
+      echo "<tr><th>Anonymity level:</th><td><input type='number' min='0' max='9' step='1' name='anonymity' value='0'></td></tr>";
       echo "</table>";
       echo "</form>";
     }
