@@ -114,7 +114,7 @@ if (logged_in()) {
       $feeAmount = min(0.01, max(floatval($amount) / 40000, 1.00));
       $totalAmount += $feeAmount * 100;
     }
-    if ($totalAmount > $availableBalance) {
+    if (round($totalAmount) > round($availableBalance)) {
       echo "<span class='error'>Not enough available balance to send transaction, need ", number_format($totalAmount / 100, 2), " BTOR.</span></div></body></html>";
       exit();
     }
