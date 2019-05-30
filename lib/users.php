@@ -66,7 +66,13 @@ function send_change_email_old($email, $authCode) {
 function send_change_email_new($oldEmail, $newEmail, $authCode) {
   global $walletEmail;
   $msg = "You have requested change of e-mail address on Bittorium webwallet from " . $oldEmail . " to " . $newEmail . ". To confirm, enter authentication code " . $authCode . " in the e-mail verification page.";
-  $result = mail($newEmail, "Change of e-mail address for Bittorium webwallet", $msg, "From: ". $walletEmail, "-f" . $walletEmail); 
+  $result = mail($newEmail, "Change of e-mail address for Bittorium webwallet", $msg, "From: ". $walletEmail, "-f" . $walletEmail);
+}
+
+function send_transfer_email($email, $authCode, $address, $amount, $paymentID) {
+  global $walletEmail;
+  $msg = "You have requested transfer of " . number_format($amount, 2) . "BTOR using payment ID '" . $paymentID . "' to wallet address " . $address .". To confirm, enter authentication code " . $authCode . " in the transfer verification page.";
+  $result = mail($email, "Transfer using Bittorium webwallet", $msg, "From: ". $walletEmail, "-f" . $walletEmail);
 }
 
 //echo "Leaving lib/users.php...<br>";

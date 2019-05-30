@@ -115,7 +115,7 @@ if (logged_in()) {
       $totalAmount += $feeAmount * 100;
     }
     if (round($totalAmount) > round($availableBalance)) {
-      echo "<span class='error'>Not enough available balance to send transaction, need ", number_format($totalAmount / 100, 2), " BTOR.</span></div></body></html>";
+      echo "<span class='error'>Not enough available balance to send transaction, need ", number_format($totalAmount / 100, 2), " BTOR, have ", number_format($availableBalance / 100, 2), " BTOR.</span></div></body></html>";
       exit();
     }
     //
@@ -130,46 +130,68 @@ if (logged_in()) {
     }
     echo " from address ", $address, " to address ", $recipient, "<br>";
     //
-    $transfers = Array();
-    $transfers[] = Array("address" => $recipient, "amount" => intval($amount * 100));
-    // Add transfer for node fee only if fee address is valid.
-    if ($feeAmount > 0) {
-      $transfers[] = Array("address" => $feeAddress, "amount" => intval($feeAmount * 100));
-    }
-    $params['transfers'] = $transfers;
-    if (strlen($paymentID) > 0) {
-      $params['paymentId'] = $paymentID;
-    }
-    $params['fee'] = 1;
-    $params['anonymity'] = intval($anonymity);
-    echo "<br>";
-    $result = walletrpc_post("sendTransaction", (Object) $params);
-//  echo "<br>Result:<br>";
-//  var_dump($result);
-    if ($result == NULL) {
-      echo "<span class='error'>Internal error, contact webwallet admin!</span></div></body></html>";
-      exit();
-    }
-    if (array_key_exists('error', $result)) {
-      if (array_key_exists('message', $result->error)) {
-        if ($result->error->message == 'Wrong amount') {
-          echo "<span class='error'>Sending failed because there was not enough unlocked balance, available balance ", number_format($availableBalance / 100, 2), " BTOR!</span></div></body></html>";
-          exit();
-        } else if ($result->error->message == 'Transaction size is too big') {
-          echo "<span class='error'>Sending failed because you don't have enough large inputs. Please <a href='info.php'>optimize</a> your wallet.</span></div></body></html>";
-          exit();
-        } else if ($result->error->message == 'Sum overflow') {
-          echo "<span class='error'>Sending failed because the transfer amount is too large.</span></div></body></html>";
-          exit();
-        } else {
-          echo "<span class='error'>Sending failed because of error '", $result->error->message, "'!</span></div></body></html>";
-          exit();
+    $email = get_email_with_spendkey($spendKey);
+    if (!isset($_POST['authCode'])) {
+      $authCode = generate_authcode($spendKey);
+      send_transfer_email($email, $authCode, $recipient, $amount, $paymentID);
+      echo "<form action='send.php' method='post'>";
+      echo "<input type='hidden' name='recipient' value='" . $recipient . "'>";
+      echo "<input type='hidden' name='amount' value='" . $amount . "'>";
+      echo "<input type='hidden' name='anonymity' value='" . $anonymity . "'>";
+      echo "<input type='hidden' name='paymentID' value='" . $paymentID . "'>";
+      echo "<table>";
+      echo "<tr><th>Enter authentication code:</th><td><input type='number' pattern='[0-9]{6}' name='authCode' placeholder='000000' required size='6'></td></tr>";
+      echo "<tr><td colspan=2 class='submit'><input type='submit' class='btn' name='send' value='Send'></td></tr>";
+      echo "</table>";
+      echo "</form>";
+    } else {
+      $authCode1 = $_POST['authCode'];
+      $authCode2 = get_authcode_with_email($email);
+      if ($authCode1 != $authCode2) {
+        echo "<span class='error'>Invalid authentication code!</span></div></body></html>";
+        exit();
+      }
+      $transfers = Array();
+      $transfers[] = Array("address" => $recipient, "amount" => intval($amount * 100));
+      // Add transfer for node fee only if fee address is valid.
+      if ($feeAmount > 0) {
+        $transfers[] = Array("address" => $feeAddress, "amount" => intval($feeAmount * 100));
+      }
+      $params['transfers'] = $transfers;
+      if (strlen($paymentID) > 0) {
+        $params['paymentId'] = $paymentID;
+      }
+      $params['fee'] = 1;
+      $params['anonymity'] = intval($anonymity);
+      echo "<br>";
+      $result = walletrpc_post("sendTransaction", (Object) $params);
+//    echo "<br>Result:<br>";
+//    var_dump($result);
+      if ($result == NULL) {
+        echo "<span class='error'>Internal error, contact webwallet admin!</span></div></body></html>";
+        exit();
+      }
+      if (array_key_exists('error', $result)) {
+        if (array_key_exists('message', $result->error)) {
+          if ($result->error->message == 'Wrong amount') {
+            echo "<span class='error'>Sending failed because there was not enough unlocked balance, available balance ", number_format($availableBalance / 100, 2), " BTOR!</span></div></body></html>";
+            exit();
+          } else if ($result->error->message == 'Transaction size is too big') {
+            echo "<span class='error'>Sending failed because you don't have enough large inputs. Please <a href='info.php'>optimize</a> your wallet.</span></div></body></html>";
+            exit();
+          } else if ($result->error->message == 'Sum overflow') {
+            echo "<span class='error'>Sending failed because the transfer amount is too large.</span></div></body></html>";
+            exit();
+          } else {
+            echo "<span class='error'>Sending failed because of error '", $result->error->message, "'!</span></div></body></html>";
+            exit();
+          }
         }
       }
-    }
-    if (array_key_exists('transactionHash', $result)) {
-      echo "Transaction sent with hash ", $result->transactionHash, "<br>";
-      echo "<a href='send.php'>Return to webwallet</a><br>";
+      if (array_key_exists('transactionHash', $result)) {
+        echo "Transaction sent with hash ", $result->transactionHash, "<br>";
+        echo "<a href='send.php'>Return to webwallet</a><br>";
+      }
     }
   }
 }
