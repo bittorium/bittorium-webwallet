@@ -57,8 +57,8 @@ if (logged_in()) {
     $action = "view";
   }
   if ($action == 'viewall') {
-    echo "<div id='wallet'>Address:&nbsp;", $address, "</div>";
-    echo "<br>";
+    echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
+    echo "<div id='qr'><img src='qr.php'></div>";
     //
     $contacts = get_contacts($spendKey);
     if ($contacts === false) {

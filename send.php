@@ -50,8 +50,8 @@ if (logged_in()) {
   $lockedBalance = $getBalance->lockedAmount;
   require("lib/menu.php");
   if (!isset($_POST['recipient']) || !isset($_POST['amount'])) {
-    echo "<div id='wallet'>Address:&nbsp;", $address, "</div>";
-    echo "<br>";
+    echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
+    echo "<div id='qr'><img src='qr.php'></div>";
     //
     $maxAmount = $availableBalance - 1;
     $getFeeAddress = daemonrpc_get("/feeaddress");
