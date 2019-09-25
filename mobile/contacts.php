@@ -1,9 +1,9 @@
 <html>
 <head>
 <title>Bittorium webwallet</title>
-<link rel="shortcut icon" href="images/logo.png">
+<link rel="shortcut icon" href="/images/logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 </head>
@@ -15,11 +15,11 @@
 
 <div class="page">
 <?php
-require("config.php");
-require("lib/daemon.php");
-require("lib/database.php");
-require("lib/validate.php");
-require("lib/users.php");
+require("../config.php");
+require("../lib/daemon.php");
+require("../lib/database.php");
+require("../lib/validate.php");
+require("../lib/users.php");
 
 try {
   open_database();
@@ -34,7 +34,7 @@ try {
   exit();
 }
 // Check if user has logged in or not?
-require("lib/login.php");
+require("../lib/login.php");
 //
 $address = "";
 if (logged_in()) {
@@ -50,7 +50,7 @@ if (logged_in()) {
   $getBalance = walletrpc_post("getBalance", $params);
   $availableBalance = $getBalance->availableBalance;
   $lockedBalance = $getBalance->lockedAmount;
-  require("lib/menu.php");
+  require("../lib/menu.php");
   $action = 'viewall';
   if (isset($_POST['action'])) {
     $action = $_POST['action'];
@@ -60,7 +60,7 @@ if (logged_in()) {
   }
   if ($action == 'viewall') {
     echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
-    echo "<div id='qr'><img src='qr.php'></div>";
+    echo "<div id='qr'><img src='/qr.php'></div>";
     //
     $contacts = get_contacts($spendKey);
     echo "<div id='content'>";
@@ -88,14 +88,14 @@ if (logged_in()) {
     echo "<form action='contacts.php' method='post'>";
     echo "<input type='hidden' name='action' value='add'>";
     echo "<table class='contact'>";
-    echo "<tr><th>Name:</th><td><input type='string' name='name' minlength='1' required size='64' value=''></td>";
+    echo "<tr><th>Name:</th><td><input type='string' name='name' minlength='1' required value=''></td>";
     echo "<td rowspan='3'><span id='scan'><a class='button' onclick='scanQR(&apos;address&apos;);' href='javascript:return false;'>Scan QR</a><br>Cameras: <span id='cameras'>None</span></span></td>";
     echo "<td rowspan='4'><video id='preview' style='display: none'></video></td></tr>";
-    echo "<tr><th>Address:</th><td><input type='string' name='address' maxlength='97' required pattern='bT[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{95}' size='97' value=''></td></tr>";
-    echo "<tr><th>Payment ID:</th><td><input type='string' name='paymentID' maxlength='64' pattern='.{0}|[0-9a-fA-F]{64}' size='64' value=''></td></tr>";
-    echo "<tr><td colspan='4' class='submit'><input type='submit' class='btn' name='submit' value='Add'></td></tr></table></form>";
+    echo "<tr><th>Address:</th><td><input type='string' name='address' maxlength='97' required pattern='bT[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{95}' value=''></td></tr>";
+    echo "<tr><th>Payment ID:</th><td><input type='string' name='paymentID' maxlength='64' pattern='.{0}|[0-9a-fA-F]{64}' value=''></td></tr>";
+    echo "<tr><td colspan='3' class='submit'><input type='submit' class='btn' name='submit' value='Add'></td></tr></table></form>";
     echo "</div>";
-    echo "<script src='qrscanner.js'></script>";
+    echo "<script src='/qrscanner.js'></script>";
   } else if ($action == 'add') {
     $cname = $_POST['name'];
     $caddress = $_POST['address'];

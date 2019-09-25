@@ -71,6 +71,13 @@ p {
   padding-top: 40px;
 }
 
+#content {
+  display: block;
+  max-width: 100% !important;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
 .btn {
   text-decoration: none;
   background: #005D77;
@@ -127,21 +134,38 @@ input {
 }
 
 table.contact {
-  min-width: 1000px;
+  max-width: calc(100% - 89px) !important;
+  display: block !important;
+  overflow-x: auto !important;
 }
 
-table.contact th,
+table.contact th {
+  text-align: left !important;
+}
+
+table.contact td {
+  text-align: right !important;
+}
+
+table.contact td.submit {
+  text-align: center !important;
+}
+
+table.send {
+  max-width: calc(100% - 89px) !important;
+  display: block !important;
+  overflow-x: auto !important;
+}
+
 table.send th {
   text-align: left !important;
 }
 
-table.contact td,
 table.send td {
   text-align: right !important;
 }
 
-table.send td.submit,
-table.contact td.submit {
+table.send td.submit {
   text-align: center !important;
 }
 
@@ -201,4 +225,56 @@ input[name="anonymity"] {
 
 input[size] {
   font-family: monospace !important;
+}
+
+@media screen and (max-width: 1030px) {
+  body, .pagetitle {
+    font-size: 20px !important;
+  }
+  .logo {
+    width: 65px !important;
+  }
+  #wallet {
+    font-size: 12px !important;
+    margin-right: 64px !important;
+  }
+  #qr {
+    width: 64px !important;
+    height: 64px !important;
+  }
+  .menu {
+    font-size: 0.5rem !important;
+  }
+  .menu a {
+    font-size: 0.6rem !important;
+  }
+  h2 {
+    font-size: 1rem !important;
+  }
+  h3 {
+    font-size: 0.8rem !important;
+  }
+  form {
+    max-width: calc(100% - 89px) !important;
+  }
+  table {
+    font-size: 0.5rem !important;
+  }
+  .button {
+    font-size: 0.5rem !important;
+  }
+  input {
+    font-size: 0.5rem !important;
+  }
+  input[name="recipient"],
+  input[name="paymentID"] {
+    max-width: 360px;
+  }
+  th {
+    min-width: 70px !important;
+  }
+  video {
+    max-width: 150px !important;
+    max-height: 150px !important;
+  }
 }

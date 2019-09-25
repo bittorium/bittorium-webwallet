@@ -1,9 +1,9 @@
 <html>
 <head>
 <title>Bittorium webwallet</title>
-<link rel="shortcut icon" href="images/logo.png">
+<link rel="shortcut icon" href="/images/logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <div class="header">
@@ -13,11 +13,11 @@
 
 <div class="page">
 <?php
-require("config.php");
-require("lib/daemon.php");
-require("lib/database.php");
-require("lib/validate.php");
-require("lib/users.php");
+require("../config.php");
+require("../lib/daemon.php");
+require("../lib/database.php");
+require("../lib/validate.php");
+require("../lib/users.php");
 
 try {
   open_database();
@@ -32,7 +32,7 @@ try {
   exit();
 }
 // Check if user has logged in or not?
-require("lib/login.php");
+require("../lib/login.php");
 //
 $address = "";
 if (logged_in()) {
@@ -47,7 +47,7 @@ if (logged_in()) {
   $getBalance = walletrpc_post("getBalance", $params);
   $availableBalance = $getBalance->availableBalance;
   $lockedBalance = $getBalance->lockedAmount;
-  require("lib/menu.php");
+  require("../lib/menu.php");
   echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
   echo "<div id='qr'><img src='qr.php'></div>";
   echo "<div id='content'>";

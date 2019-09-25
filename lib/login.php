@@ -1,14 +1,7 @@
 <?php
-// Check if user has logged in or not?
-if (isset($_POST['spendKey']) && !isset($_POST['authCode'])) {
-  // User is logging in...
-  $spendKey = $_POST['spendKey'];
-  if (!validate_spendkey($spendKey)) {
-    echo "<span class='error'>Invalid spend key!</span></div></body></html>";
-    exit();
-  }
+// User is logging in but no auth code entered yet...
+function login_no_auth($spendKey, $email) {
   $authCode = generate_authcode($spendKey);
-  $email = get_email_with_spendkey($spendKey);
   if (strlen($email) > 0) {
     send_login_email($email, $authCode);
     echo "<form action='index.php' method='post'>";
@@ -26,6 +19,17 @@ if (isset($_POST['spendKey']) && !isset($_POST['authCode'])) {
     exit();
   }
 }
+// Check if user has logged in or not?
+if (isset($_POST['spendKey']) && !isset($_POST['authCode'])) {
+  // User is logging in...
+  $spendKey = $_POST['spendKey'];
+  if (!validate_spendkey($spendKey)) {
+    echo "<span class='error'>Invalid spend key!</span></div></body></html>";
+    exit();
+  }
+  $email = get_email_with_spendkey($spendKey);
+  login_no_auth($spendKey, $email);
+}
 if (isset($_POST['spendKey']) && isset($_POST['authCode'])) {
   $spendKey = $_POST['spendKey'];
   if (!validate_spendkey($spendKey)) {
@@ -41,12 +45,31 @@ if (isset($_POST['spendKey']) && isset($_POST['authCode'])) {
     exit();
   }
 }
+if (isset($_POST['email']) && !isset($_POST['authCode'])) {
+  $email = $_POST['email'];
+  if (!validate_email($email)) {
+    echo "<span class='error'>Invalid e-mail address!</span></div></body></html>";
+    exit();
+  }
+  $spendKey = get_spendkey_with_email($email);
+  if (!validate_spendkey($spendKey)) {
+    echo "<span class='error'>Invalid spend key!</span></div></body></html>";
+    exit();
+  }
+  login_no_auth($spendKey, $email);
+}
 if (!logged_in() && !isset($_POST['spendKey'])) {
   echo "Please log in to access Bittorium web wallet!<br><br>";
   echo "<form action='index.php' method='post'>";
   echo "Wallet key: <input type='text' maxlength=64 name='spendKey' pattern='[0-9a-f]{64}' required size='64'><br>";
   echo "<input type='submit' name='submit' class='btn' value='Log in'><br>";
-  echo "</form><hr>";
+  echo "</form>";
+  echo "<br>";
+  echo "<form action='index.php' method='post'>";
+  echo "E-mail address: <input type='email' name='email' placeholder='@' required><br>";
+  echo "<input type='submit' name='submit' class='btn' value='Log in'><br>";
+  echo "</form>";
+  echo "<hr>";
   echo "If you don't have an account yet, you can register using your e-mail address.<br>";
   echo "<span class='error'>NOTE: Some e-mail providers, including Google Mail and Hotmail/Outlook/Live might block, or mark as spam, e-mails sent from websites.</span><br><br>";
   echo "<a href='register.php' class='btn'>Register an account</a><br>";

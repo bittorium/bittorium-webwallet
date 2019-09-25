@@ -1,9 +1,9 @@
 <html>
 <head>
 <title>Bittorium webwallet</title>
-<link rel="shortcut icon" href="images/logo.png">
+<link rel="shortcut icon" href="/images/logo.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.1/css/bulma.min.css">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 </head>
@@ -15,11 +15,11 @@
 
 <div class="page">
 <?php
-require("config.php");
-require("lib/daemon.php");
-require("lib/database.php");
-require("lib/validate.php");
-require("lib/users.php");
+require("../config.php");
+require("../lib/daemon.php");
+require("../lib/database.php");
+require("../lib/validate.php");
+require("../lib/users.php");
 
 try {
   open_database();
@@ -34,7 +34,7 @@ try {
   exit();
 }
 // Check if user has logged in or not?
-require("lib/login.php");
+require("../lib/login.php");
 //
 $address = "";
 if (logged_in()) {
@@ -50,10 +50,10 @@ if (logged_in()) {
   $getBalance = walletrpc_post("getBalance", $params);
   $availableBalance = $getBalance->availableBalance;
   $lockedBalance = $getBalance->lockedAmount;
-  require("lib/menu.php");
+  require("../lib/menu.php");
   if (!isset($_POST['recipient']) || !isset($_POST['amount'])) {
     echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
-    echo "<div id='qr'><img src='qr.php'></div>";
+    echo "<div id='qr'><img src='/qr.php'></div>";
     echo "<div id='content'>";
     //
     $maxAmount = $availableBalance - 1;
@@ -73,16 +73,16 @@ if (logged_in()) {
     echo "<h2>Send BTOR</h2><br>";
     echo "<form action='send.php' method='post'>";
     echo "<table class='send'>";
-    echo "<tr><th>Recipient address:</th><td><input type='text' maxlength='97' required pattern='bT[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{95}' name='recipient' size='97'></td>";
+    echo "<tr><th>Recipient address:</th><td><input type='text' maxlength='97' required pattern='bT[123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz]{95}' name='recipient'></td>";
     echo "<td rowspan='4'><span id='scan'><a class='button' onclick='scanQR(&apos;recipient&apos;);' href='javascript:return false;'>Scan QR code</a><br>Cameras: <span id='cameras'>None</span></span></td>";
     echo "<td rowspan='5'><video id='preview' style='display: none;'></video></td></tr>";
     echo "<tr><th>Amount:</th><td><input type='number' min='0.01' max='" . number_format($maxAmount / 100, 2) . "' step='0.01' name='amount' value='0.01'></td><td></td></tr>";
     echo "<tr><th>Anonymity level:</th><td><input type='number' min='0' max='9' step='1' name='anonymity' value='0'></td><td></td></tr>";
-    echo "<tr><th>Payment ID:</th><td><input type='text' maxlength='64' pattern='.{0}|[0-9a-fA-F]{64}' name='paymentID' size='64'></td><td></td></tr>";
-    echo "<tr><td colspan='3' class='submit'><input type='submit' class='btn' name='send' value='Send'></td><td></td></tr>";
+    echo "<tr><th>Payment ID:</th><td><input type='text' maxlength='64' pattern='.{0}|[0-9a-fA-F]{64}' name='paymentID'></td><td></td></tr>";
+    echo "<tr><td colspan=3 class='submit'><input type='submit' class='btn' name='send' value='Send'></td><td></td></tr></table>";
     echo "</form>";
     echo "</div>";
-    echo "<script src='qrscanner.js'></script>";
+    echo "<script src='/qrscanner.js'></script>";
   } else {
     $feeAmount = 0;
     $totalAmount = 1;
