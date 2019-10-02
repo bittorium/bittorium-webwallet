@@ -41,9 +41,21 @@ function stopScan() {
 
 function scanQR(el) {
   let addressElement = document.getElementsByName(el)[0];
+  let paymentIDElement = document.getElementsByName('paymentID')[0];
+  let amountElement = document.getElementsByName('amount')[0];
   let result = scanner.scan();
   if (result.content !== null) {
-    addressElement.setAttribute("value", result.content);
+    let items = result.content.split(";");
+    let address = items[0];
+    let paymentID = items[1];
+    let amount = items[2];
+    addressElement.setAttribute("value", address);
+    if (paymentIDElement !== null) {
+      paymentIDElement.setAttribute("value", paymentID);
+    }
+    if (amount > 0 && amountElement !== null) {
+      amountElement.setAttribute("value", amount / 100);
+    }
     stopScan();
   }
 }

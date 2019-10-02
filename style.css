@@ -151,6 +151,18 @@ table.contact td.submit {
   text-align: center !important;
 }
 
+table.generate th {
+  text-align: left !important;
+}
+
+table.generate td {
+  text-align: right !important;
+}
+
+table.generate td.submit {
+  text-align: center !important;
+}
+
 table.send {
   max-width: calc(100% - 89px) !important;
   display: block !important;
