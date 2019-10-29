@@ -45,10 +45,28 @@ function scanQR(el) {
   let amountElement = document.getElementsByName('amount')[0];
   let result = scanner.scan();
   if (result.content !== null) {
-    let items = result.content.split(";");
-    let address = items[0];
-    let paymentID = items[1];
-    let amount = items[2];
+    let address = "";
+    let paymentID = "";
+    let amount = 0;
+    let items = "";
+    if (result.content.substr(0, 2) == "bT") {
+      items = result.content.split(";");
+      address = items[0];
+      paymentID = items[1];
+      amount = items[2];
+    } else if (result.content.substr(0, 10) == "bittorium:") {
+      items = result.content.split(":")[1].split("?");
+      address = items[0];
+      for (i = 1; i < items.length; i++) {
+        let item = items[i].split("=");
+        if (item[0] == 'amount') {
+          amount = item[1] * 100;
+        }
+        if (item[0] == 'payment_id') {
+          paymentID = item[1];
+        }
+      }
+    }
     addressElement.setAttribute("value", address);
     if (paymentIDElement !== null) {
       paymentIDElement.setAttribute("value", paymentID);
