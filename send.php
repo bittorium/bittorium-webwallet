@@ -110,7 +110,7 @@ if (logged_in()) {
     $params = Array();
     $sourceAddresses = Array();
     $sourceAddresses[] = $address;
-    $params['sourceAddresses'] = $sourceAddresses;
+    $params['addresses'] = $sourceAddresses;
     $params['changeAddress'] = $address;
     //
     $getFeeAddress = daemonrpc_get("/feeaddress");
