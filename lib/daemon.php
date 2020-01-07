@@ -56,5 +56,20 @@ function walletrpc_post($method, $params = NULL) {
     return $response;
   }
 }
+
+function get_amount($address, $hash) {
+  $total = 0;
+  $params = Array();
+  $params['transactionHash'] = $hash;
+  $result = walletrpc_post('getTransaction', $params);
+  $tx = $result->transaction;
+  foreach ($tx->transfers as $transfer) {
+    if ($transfer->address == $address) {
+      $total += $transfer->amount;
+    }
+  }
+  return $total;
+}
+
 //echo "Leaving lib/daemon.php<br>";
 ?>

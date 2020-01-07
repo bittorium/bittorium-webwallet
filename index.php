@@ -75,7 +75,7 @@ if (logged_in()) {
     $tx = $result->transaction;
     echo "<h3>Transaction " . $hash . "</h3>";
     echo "<table id='transaction'>";
-    echo "<tr><th>Amount</th><td>" . number_format($tx->amount / 100, 2) . " BTOR</td></tr>";
+    echo "<tr><th>Amount</th><td>" . number_format(get_amount($address, $hash) / 100, 2) . " BTOR</td></tr>";
     echo "<tr><th>Block</th><td>" . $tx->blockIndex . "</td></tr>";
     echo "<tr><th>Fee</th><td>" . number_format($tx->fee / 100, 2) . " BTOR</td></tr>";
     echo "<tr><th>Type</th><td>" . ($tx->isBase ? "Coinbase" : "Key output") . "</td></tr>";
@@ -125,7 +125,7 @@ if (logged_in()) {
             echo "<td>" . $WalletTransactionState[$transaction->state] . "</td>";
             echo "<td><a href='?hash=" . $transaction->transactionHash . "'>" . $transaction->transactionHash . "</a></td>";
             echo "<td>" . date("D, d M y H:i:s", $transaction->timestamp) . "</td>";
-            echo "<td>" . number_format($transaction->amount / 100, 2) . "</td>";
+            echo "<td>" . number_format(get_amount($address, $transaction->transactionHash) / 100, 2) . "</td>";
             echo "<td>" . $transaction->paymentId . "</td>";
             echo "</tr>";
           }
