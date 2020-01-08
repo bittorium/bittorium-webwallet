@@ -144,10 +144,15 @@ function generate_wallet_with_email($email) {
   global $db;
   $generateWallet = walletrpc_post("createAddress");
   $address = $generateWallet->address;
-  $spendKey = get_spendkey_with_address($address);
-//echo "Generated wallet with spend key ", $spendKey, " and address ", $address, "<br>";
-  $result = $db->query("UPDATE users SET spendKey = '".$spendKey."', address = '".$address."' WHERE emailAddress='".$email."';");
-  return $result;
+  if (validate_address($address)) {
+    $spendKey = get_spendkey_with_address($address);
+    //echo "Generated wallet with spend key ", $spendKey, " and address ", $address, "<br>";
+    $result = $db->query("UPDATE users SET spendKey = '".$spendKey."', address = '".$address."' WHERE emailAddress='".$email."';");
+    return $result;
+  } else {
+    $result = $db->query("DELETE FROM users WHERE emailAddress='".$email."';");
+    return false;
+  }
 }
 
 function get_spendkey_with_email($email) {
