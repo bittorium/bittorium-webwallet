@@ -61,7 +61,7 @@ if (logged_in()) {
     if (array_key_exists('fee_address', $getFeeAddress)) {
       $feeAddress = $getFeeAddress->fee_address;
       if (validate_address($feeAddress)) {
-        $feeAmount = min(1, max(floatval($maxAmount) / 400001, 100));
+        $feeAmount = min(1, max(floatval($maxAmount) / 40001, 100));
         $maxAmount -= $feeAmount;
       }
     }
