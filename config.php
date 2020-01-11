@@ -6,4 +6,3 @@ $walletPort = 8072;
 $walletPassword = "password";
 $walletEmail = "root@webwallet.mydomain.org";
 ?>
-
