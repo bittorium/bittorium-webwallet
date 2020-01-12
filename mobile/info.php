@@ -49,7 +49,7 @@ if (logged_in()) {
   $lockedBalance = $getBalance->lockedAmount;
   require("../lib/menu.php");
   echo "<div id='wallet'>Address:&nbsp;", $address, "</div><br>";
-  echo "<div id='qr'><img src='qr.php'></div>";
+  echo "<div id='qr'><img src='/qr.php'></div>";
   echo "<div id='content'>";
   if (isset($_POST['threshold'])) {
     $threshold = $_POST['threshold'];
