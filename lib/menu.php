@@ -13,6 +13,6 @@
   echo "<a href='info.php'>Wallet info</a><br>";
   echo "<a href='logout.php'>Logout</a><br>";
   $dt = date("Y");
-  echo "<p class='footer'>&copy; ", dt != "2018" ? "2018&ndash;" : "", date("Y"), " Bittorium Project</p>";
+  echo "<p class='footer'>&copy; ", $dt != "2018" ? "2018&ndash;" : "", date("Y"), " Bittorium Project</p>";
   echo "</div>";
 ?>
