@@ -110,7 +110,7 @@ if (logged_in()) {
     echo "<table id='transactions'>";
     echo "<tr><th>State</th><th>Hash</th><th>Time</th><th>Amount</th><th>Payment ID</th></tr>";
     $ntrans = 0;
-    $skip = is_numeric($_POST["skip"]) ? $_POST["skip"] : 0;
+    $skip = (isset($_POST["skip"]) && is_numeric($_POST["skip"])) ? $_POST["skip"] : 0;
     if ($skip < 0) {
       $skip = 0;
     }
