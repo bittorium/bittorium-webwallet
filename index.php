@@ -115,10 +115,11 @@ if (logged_in()) {
       $skip = 0;
     }
     // List transactions in reverse order, from newest to oldest
-    $blocks = array_reverse($blocks);
-    foreach ($blocks as $block) {
-      $transactions = array_reverse($block->transactions);
-      foreach ($transactions as $transaction) {
+    for ($i = count($blocks) - 1; $i >= 0; $i--) {
+      $block = $blocks[$i];
+      $transactions = $block->transactions;
+      for ($j = count($transactions) - 1; $j >= 0; $j--) {
+        $transaction = $transactions[$j];
         if ($transaction->amount != 0) {
           if ($ntrans >= $skip && $ntrans < $skip + 20) {
             echo "<tr>";
